@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MegaFnVbucks</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0e0e2c;
+      color: white;
+    }
+
+    header {
+      background-color: #1e1e4c;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #00f9ff;
+    }
+
+    .section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      border: none;
+      width: 250px;
+    }
+
+    button {
+      background-color: #00f9ff;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+
+    footer {
+      background-color: #1e1e4c;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+    }
+
+    .btn {
+      background-color: #00f9ff;
+      color: black;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .disclaimer {
+      background: #ff3333;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    ul {
+      text-align: left;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    ul li {
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>MegaFnVbucks</h1>
+  </header>
+
+  <!-- Step 0: Welcome and Instructions -->
+  <section id="landing" class="section">
+    <h2>Have you completed the steps below?</h2>
+    <ul>
+      <li>✔️ Watched the full guide video</li>
+      <li>✔️ Subscribed to <strong>MegaFnVbucks</strong> YouTube channel</li>
+      <li>✔️ Followed all instructions carefully</li>
+    </ul>
+
+    <div class="disclaimer">
+      ⚠️ If any of the above steps are skipped or done incorrectly, you will NOT receive your V-Bucks.
+    </div>
+
+    <br><br>
+    <button onclick="showSection('epicForm')">Get V-Bucks</button>
+  </section>
+
+  <!-- Step 1: Enter Epic ID -->
+  <section id="epicForm" class="section hidden">
+    <h2>Enter Your Epic Games ID</h2>
+    <input type="text" id="epicId" placeholder="Your Epic ID" required />
+    <br>
+    <button onclick="goToPacks()">Next</button>
+  </section>
+
+  <!-- Step 2: Choose Pack -->
+  <section id="choosePack" class="section hidden">
+    <h2>Choose Your V-Bucks Pack</h2>
+    <form id="packForm">
+      <label><input type="radio" name="pack" value="1000" required /> 1000 V-Bucks</label>
+      <label><input type="radio" name="pack" value="2800" /> 2800 V-Bucks</label>
+      <label><input type="radio" name="pack" value="5000" /> 5000 V-Bucks</label>
+      <label><input type="radio" name="pack" value="13500" /> 13,500 V-Bucks</label>
+      <br>
+      <button type="button" onclick="showThankYou()">Submit</button>
+    </form>
+  </section>
+
+  <!-- Step 3: Confirmation -->
+  <section id="thankYou" class="section hidden">
+    <h2>✅ Thank You!</h2>
+    <p>Your request for <strong><span id="vbucksAmount"></span> V-Bucks</strong> tied to Epic ID <strong id="displayEpic"></strong> has been submitted.</p>
+    <p>The process will complete in <strong>48 hours</strong>.</p>
+    <div class="disclaimer" style="background-color: #ffbb00; color: black;">
+      ⚠️ If any step was missed or incorrect, you will NOT receive the V-Bucks.
+    </div>
+    <br>
+    <a href="#" onclick="resetForm()" class="btn">Start Over</a>
+  </section>
+
+  <footer>
+    <p>©️ 2025 MegaFnVbucks </p>
+  </footer>
+
+  <script>
+    function showSection(sectionId) {
+      document.getElementById("landing").classList.add("hidden");
+      document.getElementById("epicForm").classList.add("hidden");
+      document.getElementById("choosePack").classList.add("hidden");
+      document.getElementById("thankYou").classList.add("hidden");
+      document.getElementById(sectionId).classList.remove("hidden");
+    }
+
+    function goToPacks() {
+      const epicId = document.getElementById("epicId").value.trim();
+      if (!epicId) {
+        alert("Please enter your Epic ID.");
+        return;
+      }
+      showSection("choosePack");
+    }
+
+    function showThankYou() {
+      const epicId = document.getElementById("epicId").value.trim();
+      const selectedPack = document.querySelector('input[name="pack"]:checked');
+      if (!selectedPack) {
+        alert("Please select a V-Bucks pack.");
+        return;
+      }
+
+      document.getElementById("displayEpic").textContent = epicId;
+      document.getElementById("vbucksAmount").textContent = selectedPack.value;
+      showSection("thankYou");
+    }
+
+    function resetForm() {
+      document.getElementById("epicId").value = '';
+      document.querySelectorAll('input[name="pack"]').forEach(input => input.checked = false);
+      showSection("landing");
+    }
+  </script>
+
+</body>
+</html>
